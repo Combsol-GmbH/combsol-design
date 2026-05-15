@@ -1,0 +1,23 @@
+{
+  "name": "@combsol/design",
+  "version": "0.1.0",
+  "description": "Combsol OS Design Tokens — Single Source of Truth for all Combsol apps",
+  "main": "tailwind.preset.js",
+  "files": [
+    "tokens.css",
+    "tailwind.preset.js"
+  ],
+  "keywords": [
+    "combsol",
+    "design-tokens",
+    "tailwind",
+    "css-variables"
+  ],
+  "author": "Combsol GmbH",
+  "license": "UNLICENSED",
+  "private": false,
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Combsol-GmbH/combsol-design.git"
+  }
+}
