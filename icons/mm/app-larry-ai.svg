@@ -1,0 +1,63 @@
+<?xml version="1.0"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <defs>
+    <clipPath id="tile"><rect x="0" y="0" width="512" height="512" rx="96" ry="96"></rect></clipPath>
+    <radialGradient id="bg" cx="50%" cy="42%" r="70%">
+      <stop offset="0%" stop-color="#1A2230"></stop>
+      <stop offset="55%" stop-color="#0B1019"></stop>
+      <stop offset="100%" stop-color="#04070C"></stop>
+    </radialGradient>
+    <linearGradient id="topGloss" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="rgba(255,255,255,0.10)"></stop>
+      <stop offset="45%" stop-color="rgba(255,255,255,0)"></stop>
+    </linearGradient>
+    <radialGradient id="haloA" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#D1F77F" stop-opacity="0.34"></stop>
+      <stop offset="55%" stop-color="#D1F77F" stop-opacity="0.09"></stop>
+      <stop offset="100%" stop-color="#D1F77F" stop-opacity="0"></stop>
+    </radialGradient>
+    <filter id="neon" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="3" result="b1"></feGaussianBlur>
+      <feGaussianBlur stdDeviation="8" result="b2" in="SourceGraphic"></feGaussianBlur>
+      <feMerge><feMergeNode in="b2"></feMergeNode><feMergeNode in="b1"></feMergeNode><feMergeNode in="SourceGraphic"></feMergeNode></feMerge>
+    </filter>
+    <filter id="softGlow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="4"></feGaussianBlur>
+      <feComponentTransfer><feFuncA type="linear" slope="1.4"></feFuncA></feComponentTransfer>
+      <feComposite in2="SourceGraphic" operator="over"></feComposite>
+    </filter>
+  </defs>
+  <g clip-path="url(#tile)">
+    <rect width="512" height="512" fill="url(#bg)"></rect>
+    <g fill="none" stroke="rgba(255,255,255,0.04)" stroke-width="1">
+      <circle cx="256" cy="256" r="80"></circle><circle cx="256" cy="256" r="94"></circle><circle cx="256" cy="256" r="108"></circle><circle cx="256" cy="256" r="122"></circle><circle cx="256" cy="256" r="136"></circle><circle cx="256" cy="256" r="150"></circle><circle cx="256" cy="256" r="164"></circle><circle cx="256" cy="256" r="178"></circle><circle cx="256" cy="256" r="192"></circle><circle cx="256" cy="256" r="206"></circle><circle cx="256" cy="256" r="220"></circle><circle cx="256" cy="256" r="234"></circle><circle cx="256" cy="256" r="248"></circle><circle cx="256" cy="256" r="262"></circle><circle cx="256" cy="256" r="276"></circle><circle cx="256" cy="256" r="290"></circle><circle cx="256" cy="256" r="304"></circle><circle cx="256" cy="256" r="318"></circle><circle cx="256" cy="256" r="332"></circle><circle cx="256" cy="256" r="346"></circle><circle cx="256" cy="256" r="360"></circle><circle cx="256" cy="256" r="374"></circle>
+    </g>
+    <circle cx="256" cy="256" r="256" fill="url(#haloA)"></circle>
+    <rect width="512" height="200" fill="url(#topGloss)"></rect>
+    <circle cx="256" cy="256" r="200" fill="none" stroke="#D1F77F" stroke-width="1" stroke-dasharray="2,6" opacity="0.5"></circle>
+    <circle cx="256" cy="256" r="172" fill="none" stroke="#dff9a5" stroke-width="1" opacity="0.35"></circle>
+    
+    <g filter="url(#neon)">
+      <rect x="140" y="160" width="232" height="192" rx="14" fill="none" stroke="#D1F77F" stroke-width="6"></rect>
+      <line x1="140" y1="200" x2="372" y2="200" stroke="#D1F77F" stroke-width="3" opacity="0.7"></line>
+    </g>
+    <g filter="url(#softGlow)">
+      <circle cx="160" cy="180" r="5" fill="#D1F77F" opacity="0.8"></circle>
+      <circle cx="176" cy="180" r="5" fill="#D1F77F" opacity="0.55"></circle>
+      <circle cx="192" cy="180" r="5" fill="#D1F77F" opacity="0.35"></circle>
+    </g>
+    <g stroke="#D1F77F" stroke-width="4" stroke-linecap="round" filter="url(#softGlow)">
+      <polyline points="170,236 200,256 170,276" fill="none"></polyline>
+      <line x1="218" y1="284" x2="288" y2="284" opacity="0.85"></line>
+    </g>
+    <rect x="298" y="262" width="22" height="34" fill="#dff9a5" opacity="0.85" filter="url(#softGlow)">
+      
+    </rect>
+    <g stroke="#D1F77F" stroke-width="3" opacity="0.55">
+      <line x1="170" y1="318" x2="240" y2="318"></line>
+      <line x1="170" y1="334" x2="220" y2="334"></line>
+    </g>
+    <ellipse cx="256" cy="470" rx="240" ry="14" fill="#D1F77F" opacity="0.08" filter="url(#softGlow)"></ellipse>
+  </g>
+  <rect x="0.5" y="0.5" width="511" height="511" rx="95.5" ry="95.5" fill="none" stroke="rgba(255,255,255,0.06)" stroke-width="1"></rect>
+</svg>
