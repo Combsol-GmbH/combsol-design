@@ -1,0 +1,41 @@
+<?xml version="1.0"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <defs>
+    <clipPath id="tile"><rect x="0" y="0" width="512" height="512" rx="96" ry="96"></rect></clipPath>
+    <radialGradient id="bg" cx="50%" cy="42%" r="70%">
+      <stop offset="0%" stop-color="#1A2230"></stop>
+      <stop offset="55%" stop-color="#0B1019"></stop>
+      <stop offset="100%" stop-color="#04070C"></stop>
+    </radialGradient>
+    <linearGradient id="topGloss" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="rgba(255,255,255,0.10)"></stop>
+      <stop offset="45%" stop-color="rgba(255,255,255,0)"></stop>
+    </linearGradient>
+    <radialGradient id="haloA" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#FF7AC8" stop-opacity="0.34"></stop>
+      <stop offset="55%" stop-color="#FF7AC8" stop-opacity="0.09"></stop>
+      <stop offset="100%" stop-color="#FF7AC8" stop-opacity="0"></stop>
+    </radialGradient>
+    <filter id="neon" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="3" result="b1"></feGaussianBlur>
+      <feGaussianBlur stdDeviation="8" result="b2" in="SourceGraphic"></feGaussianBlur>
+      <feMerge><feMergeNode in="b2"></feMergeNode><feMergeNode in="b1"></feMergeNode><feMergeNode in="SourceGraphic"></feMergeNode></feMerge>
+    </filter>
+    <filter id="softGlow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="4"></feGaussianBlur>
+      <feComponentTransfer><feFuncA type="linear" slope="1.4"></feFuncA></feComponentTransfer>
+      <feComposite in2="SourceGraphic" operator="over"></feComposite>
+    </filter>
+  </defs>
+  <g clip-path="url(#tile)">
+    <rect width="512" height="512" fill="url(#bg)"></rect>
+    <g fill="none" stroke="rgba(255,255,255,0.04)" stroke-width="1"><circle cx="256" cy="256" r="80"></circle><circle cx="256" cy="256" r="94"></circle><circle cx="256" cy="256" r="108"></circle><circle cx="256" cy="256" r="122"></circle><circle cx="256" cy="256" r="136"></circle><circle cx="256" cy="256" r="150"></circle><circle cx="256" cy="256" r="164"></circle><circle cx="256" cy="256" r="178"></circle><circle cx="256" cy="256" r="192"></circle><circle cx="256" cy="256" r="206"></circle><circle cx="256" cy="256" r="220"></circle><circle cx="256" cy="256" r="234"></circle><circle cx="256" cy="256" r="248"></circle><circle cx="256" cy="256" r="262"></circle><circle cx="256" cy="256" r="276"></circle><circle cx="256" cy="256" r="290"></circle><circle cx="256" cy="256" r="304"></circle><circle cx="256" cy="256" r="318"></circle><circle cx="256" cy="256" r="332"></circle><circle cx="256" cy="256" r="346"></circle><circle cx="256" cy="256" r="360"></circle><circle cx="256" cy="256" r="374"></circle></g>
+    <circle cx="256" cy="256" r="256" fill="url(#haloA)"></circle>
+    <rect width="512" height="200" fill="url(#topGloss)"></rect>
+    <circle cx="256" cy="256" r="200" fill="none" stroke="#FF7AC8" stroke-width="1" stroke-dasharray="2,6" opacity="0.5"></circle>
+    <circle cx="256" cy="256" r="172" fill="none" stroke="#ffa2d9" stroke-width="1" opacity="0.35"></circle>
+    <g filter="url(#neon)" stroke="#FF7AC8" stroke-width="6" fill="none" stroke-linecap="round" stroke-linejoin="round"><circle cx="256" cy="200" r="23"/><path d="M256 231 L218 304 L294 304 Z"/><path d="M230 196 a26 26 0 0 1 52 0"/></g><circle cx="256" cy="168" r="7" fill="#ffa2d9" filter="url(#softGlow)"/>
+    <ellipse cx="256" cy="470" rx="240" ry="14" fill="#FF7AC8" opacity="0.08" filter="url(#softGlow)"></ellipse>
+  </g>
+  <rect x="0.5" y="0.5" width="511" height="511" rx="95.5" ry="95.5" fill="none" stroke="rgba(255,255,255,0.06)" stroke-width="1"></rect>
+</svg>
