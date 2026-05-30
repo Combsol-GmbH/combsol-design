@@ -1,0 +1,84 @@
+{
+  "repo": "combsol-design",
+  "reviewDate": "2026-05-30",
+  "stack": "Reines Design-Token-/Asset-Paket (@combsol/design). Inhalt: tokens.css (CSS Custom Properties + Komponenten-Styles), tailwind.preset.js (Token->Tailwind-Mapping), ~300 SVG-App-Icons, IconLibrary-Demo-HTML. Kein Backend, keine API, keine Build-/Runtime-Logik. Konsum via GitHub-URL-Dependency.",
+  "findings": [
+    {
+      "id": "combsol-design-01",
+      "repo": "combsol-design",
+      "kategorie": "Dependencies",
+      "severity": "mittel",
+      "titel": "Floating Git-Dependency ohne Commit/Tag-Pin",
+      "beschreibung": "Konsumenten binden das Paket als 'github:Combsol-GmbH/combsol-design' ohne ref/tag/commit ein (verifiziert in FAIR-Kapa). Bei jedem 'npm install' wird der aktuelle Default-Branch-HEAD gezogen -> nicht reproduzierbare Builds. Ein Push auf den Default-Branch aendert still das Design UND die mitgelieferte Komponenten-CSS aller Apps. Die package.json-Version bleibt zudem auf 0.1.0, obwohl sich der Inhalt aendert (keine semver-Disziplin).",
+      "dateien": ["package.json:2", "/home/user/FAIR-Kapa/package.json:16"],
+      "empfehlung": "Releases taggen und Konsumenten auf einen Pin ziehen (github:Combsol-GmbH/combsol-design#v1.2.3 oder #<commit-sha>); version pro Aenderung anheben.",
+      "aufwand": "S"
+    },
+    {
+      "id": "combsol-design-02",
+      "repo": "combsol-design",
+      "kategorie": "Doku",
+      "severity": "mittel",
+      "titel": "Font-Definition widerspricht der 'Single Source of Truth'",
+      "beschreibung": "Das Paket bezeichnet sich als 'Single Source of Truth for all Combsol apps', aber bei den Fonts existieren drei abweichende Wahrheiten: tokens.css setzt --font-sans auf 'Geist'/'Inter'; FAIR-Kapas CLAUDE.md schreibt Montserrat (Display)/Merriweather Sans (Body)/JetBrains Mono vor; die IconLibrary-Demo laedt Inter/Fraunces/JetBrains Mono. Der SSOT-Anspruch ist fuer Fonts nicht eingehalten.",
+      "dateien": ["tokens.css:38", "icons/IconLibrary-extended.html:8", "/home/user/FAIR-Kapa/CLAUDE.md:26"],
+      "empfehlung": "Eine verbindliche Font-Quelle in tokens.css festlegen und alle Konsumenten darauf ausrichten; CLAUDE.md-Angaben der Apps angleichen.",
+      "aufwand": "M"
+    },
+    {
+      "id": "combsol-design-03",
+      "repo": "combsol-design",
+      "kategorie": "Code-Qualitaet",
+      "severity": "niedrig",
+      "titel": "tokens.css enthaelt vollstaendige Komponenten-CSS, nicht nur Tokens",
+      "beschreibung": "Die als 'Design Tokens' positionierte Datei enthaelt ab Zeile ~166 eine komplette Komponenten-Stylesheet (body, .os-shell, .os-topbar, .rail-btn, .btn, .card, .tile, .section-hd, ...) — rund 600 von 761 Zeilen sind keine Variablen. Das tailwind.preset.js mappt nur die Token-Variablen; der Komponenten-Layer wird ungebuendelt mitgeliefert und ist in README/Preset nicht dokumentiert (Naming-/Scope-Mismatch).",
+      "dateien": ["tokens.css:166", "tailwind.preset.js:14"],
+      "empfehlung": "tokens.css auf reine Variablen reduzieren und Komponentenstile in eine separate components.css auslagern; beide im README dokumentieren.",
+      "aufwand": "M"
+    },
+    {
+      "id": "combsol-design-04",
+      "repo": "combsol-design",
+      "kategorie": "DSGVO",
+      "severity": "niedrig",
+      "titel": "IconLibrary-Demo laedt Google Fonts vom CDN",
+      "beschreibung": "Die Demo-HTML bindet ueber preconnect/stylesheet fonts.googleapis.com bzw. fonts.gstatic.com ein. Das uebertraegt beim Aufruf die Besucher-IP an Google — in DE/EU DSGVO-relevant (Rechtsprechung zu eingebundenen Google Fonts). Die Datei ist nur eine Demo (nicht im npm-'files'-Feld), liegt aber im Repo und koennte versehentlich oeffentlich deployt werden.",
+      "dateien": ["icons/IconLibrary-extended.html:6", "icons/IconLibrary-extended.html:8"],
+      "empfehlung": "Fonts in der Demo selbst hosten (lokale woff2) oder explizit dokumentieren, dass die Demo nicht oeffentlich ausgeliefert wird.",
+      "aufwand": "S"
+    },
+    {
+      "id": "combsol-design-05",
+      "repo": "combsol-design",
+      "kategorie": "Tests",
+      "severity": "niedrig",
+      "titel": "Kein automatischer Token<->Preset-Paritaets-Check",
+      "beschreibung": "Aktuell ist die Paritaet intakt (75 var()-Referenzen im Preset, 0 davon fehlen in tokens.css — manuell geprueft). Es gibt aber keinen CI-/Test-Guard: driftet ein Variablenname zwischen tokens.css und tailwind.preset.js, bricht es still bei allen Konsumenten (Utility verweist auf undefinierte CSS-Variable). Es existiert kein scripts-/test-Setup.",
+      "dateien": ["package.json", "tailwind.preset.js"],
+      "empfehlung": "Kleinen Node-Check als CI ergaenzen: jede preset-var(--x) muss in tokens.css definiert sein (Set-Differenz), sonst Fehler.",
+      "aufwand": "S"
+    },
+    {
+      "id": "combsol-design-06",
+      "repo": "combsol-design",
+      "kategorie": "Doku",
+      "severity": "niedrig",
+      "titel": "Lizenz UNLICENSED bei private:false (widerspruechlich)",
+      "beschreibung": "package.json setzt 'license': 'UNLICENSED' und gleichzeitig 'private': false (publish-faehig). Das ist widerspruechlich: ein veroeffentlichbares Paket ohne Nutzungslizenz. Fuer ein internes Combsol-Paket ist die Intention vermutlich 'intern/proprietaer'.",
+      "dateien": ["package.json:18", "package.json:21"],
+      "empfehlung": "Entweder 'private': true setzen (kein npm-Publish) oder eine klare interne Lizenzkennzeichnung waehlen.",
+      "aufwand": "S"
+    },
+    {
+      "id": "combsol-design-07",
+      "repo": "combsol-design",
+      "kategorie": "Endpoints",
+      "severity": "niedrig",
+      "titel": "Pflicht-Endpoints/Sicherheit/PII: nicht zutreffend (Soll-Zustand)",
+      "beschreibung": "Reines statisches Token-/Icon-Paket: keine API, kein /api/health, kein exchange-code/redeem-code, kein APP_TOKEN_SECRET, keine Auth, keine PII, keine ausfuehrbaren Server-Pfade. Keine hartkodierten Secrets gefunden. Alle ~300 SVG-Icons sind frei von <script>/onload/onerror/javascript: (XSS-sicher auch beim Inlinen via innerHTML). Es existiert keine CLAUDE.md in diesem Repo (fuer ein Asset-Paket vertretbar).",
+      "dateien": ["package.json", "icons/mm/"],
+      "empfehlung": "Kein Fix noetig — als Soll-Zustand vermerkt. Optional kurze CONTRIBUTING/CLAUDE.md fuer Token-Konventionen.",
+      "aufwand": "S"
+    }
+  ]
+}
