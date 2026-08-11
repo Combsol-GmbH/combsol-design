@@ -4,6 +4,17 @@
 
 Dieses Paket stellt `tokens.css` (CSS Custom Properties) und ein Tailwind-Preset bereit, das alle Tokens als Tailwind-Utilities verfügbar macht.
 
+## Tech-Stack
+
+| Bereich | Technologie |
+|---|---|
+| Design-Tokens und Basestyles | CSS Custom Properties und globale CSS-Regeln |
+| Utility-Integration | JavaScript-Tailwind-Preset |
+| Icons und Assets | SVG sowie statische HTML-Vorschauen |
+| Paketverteilung | GitHub-Dependency über npm beziehungsweise pnpm |
+| Qualitätssicherung | GitHub Actions, Dependabot und dokumentierte Audit-Findings |
+| Hosting | Kein eigener Service; das Paket wird in konsumierende Apps eingebaut |
+
 ---
 
 ## Einbinden
@@ -118,7 +129,7 @@ In der globalen CSS-Datei oder `main.tsx`:
 | Liquidität | `--app-liquid` | Emerald |
 | Notes | `--app-notes` | Magenta |
 | Briefing | `--app-briefing` | Sky |
-| Command Center | `--app-cc` | Lime |
+| Legacy: Command Center (App entfernt) | `--app-cc` | Lime |
 | Design System | `--app-ds` | Indigo |
 
 ---
@@ -150,6 +161,71 @@ Alle Tokens sind als Tailwind-Utilities verfügbar:
 - Tokens werden nur von Björn geändert.
 - Neue Tokens: PR auf dieses Repo, Semver-Minor.
 - Breaking Changes (Token-Wert-Änderung): Semver-Major.
-- Larry darf dieses Repo nicht modifizieren.
+- Änderungen benötigen einen nachvollziehbaren Review, da alle konsumierenden Apps betroffen sein können.
 
-**Version:** 0.1.0 — 2026-05-15
+**Paketversion:** 0.1.0 · **Dokumentationsstand:** 11. August 2026
+
+## Paketarchitektur
+
+| Pfad | Verantwortung |
+|---|---|
+| [`tokens.css`](tokens.css) | CSS Custom Properties, Reset, Shell- und wiederverwendbare Komponentenstile |
+| [`tailwind.preset.js`](tailwind.preset.js) | Stellt Design-Tokens als Tailwind-Theme und Utilities bereit |
+| [`icons/`](icons/) | SVG-Iconbibliothek, Vorschau und Gestaltungsleitfaden |
+| [`icons/icon-design-skill.md`](icons/icon-design-skill.md) | Regeln für konsistente neue Icons |
+| [`audit-report/`](audit-report/) | Historische Qualitäts-, Architektur- und Security-Findings |
+| [`package.json`](package.json) | GitHub-Paketmetadaten; veröffentlicht nur `tokens.css` und `tailwind.preset.js` |
+
+`tokens.css` ist bewusst mehr als eine reine Variablendatei. Ab dem Basis-/Komponentenbereich bringt der Import globale Resets, Shell-Layout und Komponentenstile mit. Konsumierende Apps müssen deshalb den Import genau einmal und vor app-spezifischen Overrides platzieren.
+
+## Lokale Entwicklung und Prüfung
+
+Das Repository besitzt keinen Build- oder Startprozess. Änderungen werden direkt in CSS, Tailwind-Preset oder SVG-Dateien vorgenommen und anschließend in mindestens einer repräsentativen App geprüft.
+
+```bash
+git clone https://github.com/Combsol-GmbH/combsol-design.git
+cd combsol-design
+npm install
+
+# Danach in einer konsumierenden App die lokale Quelle verlinken
+npm install ../combsol-design
+```
+
+Vor einem Merge sind mindestens zu prüfen: CSS-Syntax, referenzierte Token-Parität zwischen Preset und `tokens.css`, Dark-only Darstellung, Fokus-/Hoverzustände, Responsive Shell sowie ein realer Produktionsbuild einer konsumierenden App.
+
+## Release und Verteilung
+
+Das Design-System wird **nicht deployed**. Apps beziehen es als GitHub-Dependency. Eine Änderung wird daher erst aktiv, wenn die konsumierende App ihre Lockdatei beziehungsweise den referenzierten Commit aktualisiert und neu deployed wird.
+
+Es existieren keine Umgebungsvariablen, Datenbank oder Healthchecks. GitHub Actions führt Security- und Dependency-Prüfungen bei Pull Requests und Pushes auf `main` beziehungsweise `master` aus.
+
+## Letzte größere Änderungen
+
+| Datum | Änderung | Referenz |
+|---|---|---|
+| 2026-07-15 | Secret- und Dependency-Audit-Gate ergänzt | `47a6465` |
+| 2026-07-14 | Wöchentliche Dependabot-Updates aktiviert | `961c738` |
+| 2026-05-30 | Detaillierte Review-Findings als JSON abgelegt | `20bd9f3` |
+| 2026-05-22 | Security-Abhängigkeiten, Cleanup und Dokumentation verbessert | `b7b7e6f` |
+| 2026-05-20 | 68 zusätzliche Memory-Map-Icons ergänzt | `3abb793` |
+
+## Bekannte Eigenheiten und Gotchas
+
+| Thema | Besonderheit |
+|---|---|
+| **Globaler CSS-Import** | `tokens.css` enthält neben Variablen auch Reset-, Shell- und Komponentenstile. Mehrfachimport oder falsche Reihenfolge kann Apps sichtbar verändern. |
+| **Dark-only Zielbild** | Combsol OS wird produktiv dark-only betrieben. Vorhandene Light-Werte sind kein Freibrief für neue Light-Varianten ohne explizite Entscheidung. |
+| **Token-Parität** | Es gibt aktuell keinen automatischen Test, der jede im Tailwind-Preset referenzierte Variable gegen `tokens.css` prüft. |
+| **GitHub-Dependency** | Ohne feste Commit-/Tag-Strategie können Installationen zu unterschiedlichen Zeitpunkten unterschiedliche Stände beziehen. Lockdateien mitcommitten. |
+| **Semver ohne Registry** | Die dokumentierte Semver-Governance ist organisatorisch; das Paket wird derzeit nicht über eine Package Registry veröffentlicht. |
+| **Lizenz/Publizierung** | `package.json` ist `UNLICENSED`, aber nicht als `private` markiert. Vor externer Veröffentlichung rechtlich und technisch klären. |
+| **Icon-Vorschau** | `icons/IconLibrary-extended.html` lädt Google Fonts extern. Nicht ungeprüft in produktive oder öffentlich erreichbare Flächen übernehmen. |
+| **App-Hues** | Legacy-Tokens können nach Entfernung einer App bestehen bleiben. Nicht löschen, bevor alle konsumierenden Repos durchsucht sind. |
+| **Breitenwirkung** | Token-Wertänderungen wirken auf alle Apps, auch ohne Codeänderung dort. Vor Merge mindestens Hub und eine Satellite-App visuell prüfen. |
+
+## Weiterführende Dokumentation
+
+| Dokument | Inhalt |
+|---|---|
+| [`icons/icon-design-skill.md`](icons/icon-design-skill.md) | Form-, Raster- und Exportregeln für Icons |
+| [`audit-report/findings-combsol-design.json`](audit-report/findings-combsol-design.json) | Vollständige historische Review-Findings |
