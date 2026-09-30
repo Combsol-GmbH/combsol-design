@@ -67,17 +67,17 @@ In der globalen CSS-Datei oder `main.tsx`:
 
 ### Surface & Text
 
-| Token | Dark Default | Light |
-|---|---|---|
-| `--bg` | `#0A0D11` | `#F4F6F8` |
-| `--bg-2` | `#0E1217` | `#ECEFF2` |
-| `--surface` | `#131820` | `#FFFFFF` |
-| `--surface-2` | `#181E27` | `#F8FAFC` |
-| `--surface-3` | `#1F2630` | `#EEF1F5` |
-| `--text` | `#E6EBF0` | `#0A0D11` |
-| `--text-2` | `#9AA5B4` | `#4B5563` |
-| `--text-3` | `#5F6B7C` | `#6B7280` |
-| `--text-mute` | `#424E5F` | `#9CA3AF` |
+| Token | Wert |
+|---|---|
+| `--bg` | `#0A0D11` |
+| `--bg-2` | `#0E1217` |
+| `--surface` | `#131820` |
+| `--surface-2` | `#181E27` |
+| `--surface-3` | `#1F2630` |
+| `--text` | `#E6EBF0` |
+| `--text-2` | `#9AA5B4` |
+| `--text-3` | `#5F6B7C` |
+| `--text-mute` | `#424E5F` |
 
 ### Accent & Semantik
 
@@ -136,7 +136,7 @@ In der globalen CSS-Datei oder `main.tsx`:
 
 ## Tailwind-Klassen
 
-Alle Tokens sind als Tailwind-Utilities verfügbar:
+Die im Preset referenzierten Tokens sind als Tailwind-Utilities verfügbar:
 
 ```html
 <!-- Farben -->
@@ -206,6 +206,7 @@ GitHub Actions führt CodeQL bei Pull Requests und Pushes auf `master` sowie wö
 
 | Datum | Änderung | Referenz |
 |---|---|---|
+| 2026-09-23 | CodeQL-Workflow ergänzt | `14a3398` |
 | 2026-07-15 | Secret- und Dependency-Audit-Gate ergänzt | `47a6465` |
 | 2026-07-14 | Wöchentliche Dependabot-Updates aktiviert | `961c738` |
 | 2026-05-30 | Detaillierte Review-Findings als JSON abgelegt | `20bd9f3` |
@@ -217,14 +218,14 @@ GitHub Actions führt CodeQL bei Pull Requests und Pushes auf `master` sowie wö
 | Thema | Besonderheit |
 |---|---|
 | **Globaler CSS-Import** | `tokens.css` enthält neben Variablen auch Reset-, Shell- und Komponentenstile. Mehrfachimport oder falsche Reihenfolge kann Apps sichtbar verändern. |
-| **Dark-only Zielbild** | Combsol OS wird produktiv dark-only betrieben. Vorhandene Light-Werte sind kein Freibrief für neue Light-Varianten ohne explizite Entscheidung. |
+| **Dark-only Implementierung** | `tokens.css` setzt `color-scheme: dark`; eine Light-Theme-Implementierung ist im Paket nicht vorhanden. |
 | **Token-Parität** | Es gibt aktuell keinen automatischen Test, der jede im Tailwind-Preset referenzierte Variable gegen `tokens.css` prüft. |
 | **GitHub-Dependency** | Ohne feste Commit-/Tag-Strategie können Installationen zu unterschiedlichen Zeitpunkten unterschiedliche Stände beziehen. Lockdateien mitcommitten. |
-| **Semver ohne Registry** | Die dokumentierte Semver-Governance ist organisatorisch; das Paket wird derzeit nicht über eine Package Registry veröffentlicht. |
+| **Semver ohne Registry-Konfiguration** | Die dokumentierte Semver-Governance ist organisatorisch. Eine Registry-Publish-Konfiguration ist im Repository nicht vorhanden; der Veröffentlichungsstatus ist damit nicht belegt. |
 | **Lizenz/Publizierung** | `package.json` ist `UNLICENSED`, aber nicht als `private` markiert. Vor externer Veröffentlichung rechtlich und technisch klären. |
 | **Icon-Vorschau** | `icons/IconLibrary-extended.html` lädt Google Fonts extern. Nicht ungeprüft in produktive oder öffentlich erreichbare Flächen übernehmen. |
 | **App-Hues** | Legacy-Tokens können nach Entfernung einer App bestehen bleiben. Nicht löschen, bevor alle konsumierenden Repos durchsucht sind. |
-| **Breitenwirkung** | Token-Wertänderungen wirken auf alle Apps, auch ohne Codeänderung dort. Vor Merge mindestens Hub und eine Satellite-App visuell prüfen. |
+| **Breitenwirkung** | Token-Wertänderungen können angebundene Apps ohne Änderungen in deren Quellcode sichtbar beeinflussen. Vor Merge eine repräsentative bekannte Integration visuell prüfen. |
 
 ## Weiterführende Dokumentation
 
